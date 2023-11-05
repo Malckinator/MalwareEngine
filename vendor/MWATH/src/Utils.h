@@ -16,6 +16,16 @@ namespace MWATH {
 	}
 
 	template<typename T>
+	inline T Rad(T x) {
+		return x * (Pi<T>() / 180);
+	}
+
+	template<typename T>
+	inline T Deg(T x) {
+		return x / (Pi<T>() / 180);
+	}
+
+	template<typename T>
 	inline T Sqrt(T x) {
 		if (typeid(x) == typeid(float)) {
 			return static_cast<T>(std::sqrtf(x));
@@ -61,5 +71,5 @@ namespace MWATH {
 	template<typename T>
 	inline T Acos(T x) {
 		return static_cast<T>(std::acos(static_cast<float>(x)));
-	}	
+	}
 }

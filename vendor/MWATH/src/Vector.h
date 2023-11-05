@@ -8,8 +8,8 @@
 #define VEC4_OPERATOR(op) inline Vec4<T>& operator op(Vec4<T>& other) { other.x op= this->x; other.y op= this->y; other.z op= this->z; other.w op= this->w; return other; }
 
 #define VEC2_SINGLE_OPERATOR(op) inline Vec2<T>& operator op(T other) { return Vec2<T>(this->x op other, this->y op other); }
-#define VEC3_SINGLE_OPERATOR(op) inline Vec2<T>& operator op(T other) { return Vec2<T>(this->x op other, this->y op other, this->z op other); }
-#define VEC4_SINGLE_OPERATOR(op) inline Vec2<T>& operator op(T other) { return Vec2<T>(this->x op other, this->y op other, this->z op other, this->w op other); }
+#define VEC3_SINGLE_OPERATOR(op) inline Vec3<T>& operator op(T other) { return Vec3<T>(this->x op other, this->y op other, this->z op other); }
+#define VEC4_SINGLE_OPERATOR(op) inline Vec4<T>& operator op(T other) { return Vec4<T>(this->x op other, this->y op other, this->z op other, this->w op other); }
 
 namespace MWATH {
 	template<typename T>
@@ -107,11 +107,11 @@ namespace MWATH {
 		}
 
 		inline T Length() {
-			return Sqrt(Pow(x, 2) + Pow(y, 2) + Pow(z, 2));
+			return Sqrt(Pow(x, (T) 2) + Pow(y, (T) 2) + Pow(z, (T) 2));
 		}
 
-		inline Vec2<T> Normalize() {
-			return this / Length();
+		inline Vec3<T> Normalize() {
+			return *this / Length();
 		}
 
 		VEC3_OPERATOR(+);
@@ -212,7 +212,7 @@ namespace MWATH {
 			return Sqrt(Pow(x, 2) + Pow(y, 2) + Pow(z, 2));
 		}
 
-		inline Vec2<T> Normalize() {
+		inline Vec4<T> Normalize() {
 			return this / Length();
 		}
 
@@ -240,6 +240,15 @@ namespace MWATH {
 	template<typename T>
 	T Dot(Vec4<T>& a, Vec4<T>& b) {
 		return (a * b).Sum();
+	}
+
+	template<typename T>
+	inline Vec3<T> Cross(Vec3<T>& x, Vec3<T>& y) {
+		return Vec3<T>(
+			x.y * y.z - y.y * x.z,
+			x.z * y.x - y.z * x.x,
+			x.x * y.y - y.x * x.y
+		);
 	}
 	
 	typedef Vec2<float> Float2;
